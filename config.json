@@ -1,0 +1,5 @@
+{
+	"logfile_path": "/path/to/logfile",
+	"password": "A safe passowrd",
+	"port": 7500
+}
