@@ -1,9 +1,17 @@
 viewlog = {};
 viewlog.activeLine = 0;
+viewlog.error = function(request){
+	if (request.readyState == 4)
+		alert(request.responseText);
+	else
+		alert("Connection failed");
+	Cookies.remove("ssid")
+	location.reload();
+}
 viewlog.reload = function(){
 	return $.post({
 		url: "/data",
-		data: {ssid: Cookie.get("ssid")},
+		data: Cookies.get("ssid"),
 		ifModified: true,
 		success: data => {
 			$("#content").innerHTML = "<var>" + data.replace(/\n/g, "\n</var><var>") + "</var>";
@@ -16,38 +24,30 @@ viewlog.reload = function(){
 				}
 			});
 		},
-		error: data => {
-			alert(data);
-		}
+		error: viewlog.error,
 	});
 }
 viewlog.login = function(){
 	return $.post({
 		url: "/login",
-		data: {password: prompt("Enter the Password to view the Logfile:")},
+		data: prompt("Enter the Password to view the Logfile:"),
 		success: data => {
-			Cookie.set("ssid", data);
+			Cookies.set("ssid", data);
 		},
-		error: data => {
-			alert(data);
-			location.reload();
-		}
+		error: viewlog.error,
 	});
 }
 viewlog.logout = function(){
 	return $.post({
 		url: "/logout",
-		data: {ssid: Cookie.get("ssid")},
+		data: Cookies.get("ssid"),
 		success: data => {
 			location.reload();
 		},
-		error: data => {
-			alert(data);
-			location.reload();
-		}
+		error: viewlog.error,
 	});
 }
-if (Cookie.get("ssid"))
+if (Cookies.get("ssid"))
 	viewlog.reload();
 else
 	viewlog.login().then(viewlog.reload);

@@ -1,5 +1,5 @@
 {
-	"logfile_path": "/path/to/logfile",
-	"password": "A safe passowrd",
+	"file": "~/minetest/debug.txt",
+	"password": "password",
 	"port": 7500
 }

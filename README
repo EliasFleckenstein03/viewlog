@@ -4,7 +4,7 @@ How to run:
 Edit config.json:
     password: The password to access the logfile online
     port: The port to run the server
-    logfile_path: Where the logfile is located
+    file: Where the logfile is located
 Then run 
     node server.js
 and point your browser to <your_ip_address>:<port>
